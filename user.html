@@ -6,11 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>UTMs In Your Face</title>
-
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>   
+	<script src='https://cdn.firebase.com/v0/firebase.js'></script>
+	<script type='text/javascript' src='https://cdn.firebase.com/v0/firebase-simple-login.js'></script>
+  
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
 
-  </head>
+		<script>
+
+			//Hijacking The Form
+	    	var formCapture = function(event) {
+		        event.preventDefault(); }
+
+			//Firebase SimpleLogin Default Script	
+			var utmAuth = new Firebase('https://utmz.firebaseio.com');
+			var auth = new FirebaseSimpleLogin(utmAuth, function(error, user) {
+			  if (error) {
+			    // an error occurred while attempting login
+			    console.log(error);
+			  } else if (user) {
+			    // user authenticated with Firebase
+			    console.log('User ID: ' + user.id + ', Provider: ' + user.provider);
+			    var iDD = user.id;
+			  } else {
+			    // user is logged out
+			  }
+			});
+
+			auth.login('password', {
+			  email: 'ethangj@gmail.com',
+			  password: 'romona123'
+			});
+
+
+	      	//Making JS Do Shit
+		  	$().ready(function() {
+		       $('form').submit(formCapture); 
+		  });
+
+	    </script>
+	</head>
 	<body>
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
@@ -37,11 +73,11 @@
 					<form class="form-inline" role="form">
 					  <div class="form-group">
 					    <label class="sr-only" for="email">URL</label>
-					    <input type="email" class="form-control" id="email" placeholder="E-mail Address">
+					    <input type="email" class="form-control" id="email" name="email" placeholder="E-mail Address">
 					  </div>
 					  <div class="form-group">
 					  	<label class="sr-only" for="password">Campaign</label>
-					    <input type="password" class="form-control" id="password" placeholder="Password">
+					    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
 					  </div>
 					  
 					  <button type="submit" class="btn btn-default">Go!</button>

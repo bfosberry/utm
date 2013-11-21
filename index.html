@@ -9,33 +9,81 @@
 
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>   
 	<script src='https://cdn.firebase.com/v0/firebase.js'></script>
-
+ 	<script type='text/javascript' src='https://cdn.firebase.com/v0/firebase-simple-login.js'></script>   
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
 
     <script>
-		var myRootRef = new Firebase('https://utmz.firebaseIO.com/');
 
-      var formCapture = function(event) {
-        event.preventDefault();
-        console.log('submit!');
-        var entry = {
-          campaign: $("input[name=campaign]").val(),
-          url: $("input[name=url]").val(),
-          source: $("input[name=source]:checked").val(),
-          medium: $("select[name=medium]").val()
-        };
-        console.log(entry);
-		myRootRef.push({url : entry.url, source : entry.source, campaign: entry.campaign, medium: entry.medium}); 
+    	//Pulling Data From Firebase and Building Initial Table
+			var fireBaseConnect2 = new Firebase('https://utmz.firebaseIO.com/');
+			// fireBaseConnect2.on('child_added', function(snapshot) {
+			// 	$("#table-results").append("<tr><td>"+snapshot.val().url+"</td><td>"+snapshot.val().source+"</td><td>"+snapshot.val().medium+"</td><td>"+snapshot.val().campaign+"</td><td>"+Date()+"</td></tr>");			  
+			// });
+
+		//Firebase SimpleLogin Default Script	
+		var currentUser = {};
+		var utmAuth = new Firebase('https://utmz.firebaseio.com');
+		var auth = new FirebaseSimpleLogin(utmAuth, function(error, user) {
+		  if (error) {
+		    // an error occurred while attempting login
+		    console.log(error);
+		  } else if (user) {
+		    // user authenticated with Firebase
+		    console.log('User ID: ' + user.id + ', Provider: ' + user.provider);
+			currentUser = user;  
+			currentUserRef = fireBaseConnect2.child('/users/' + currentUser.id);	
+			currentUserRef.on('child_added', function(snapshot) {
+				$("#table-results").append("<tr><td>"+snapshot.val().url+"</td><td>"+snapshot.val().source+"</td><td>"+snapshot.val().medium+"</td><td>"+snapshot.val().campaign+"</td><td>"+Date()+"</td></tr>");			  
+			});			 
+		  } else {
+		    // user is logged out
+		  }
+		});
+
+		auth.login('password', {
+		  email: 'ethangj@gmail.com',
+		  password: 'romona123',
+  		  rememberMe: false		  
+		});
+
+
+		//Hijacking The Form
+    	var formCapture = function(event) {
+	        event.preventDefault();
+
+
+			//Building Variables And Object Out Of Form Results
+	  		var entry = {
+	          campaign: $("input[name=campaign]").val(),
+	          source: $("input[name=source]:checked").val(),
+	          medium: $("select[name=medium]").val() 
+	      	};			
+		    var srcObj = new Object();
+		    $("input:checked").each(function(i){
+	            var sourcedUrl = $("input[name=url]").val()+"?utm_medium="+
+	          		$("select[name=medium]").val()+"&utm_source="+
+	          		$(this).val()+"&utm_campaign="+
+	          		$("input[name=campaign]").val(); 
+		        srcObj[$(this).val()] = sourcedUrl;        
+	        });        
+
+		    //Connecting To Firebase And Setting Each Link As A Record In A Links Object
+			for(var k in srcObj){
+			var fireBaseConnect = new Firebase('https://utmz.firebaseIO.com/users/'+currentUser.id);
+				fireBaseConnect.child(entry.campaign + " + " + k).set({url: srcObj[k], source: k, campaign: entry.campaign, medium: entry.medium});
+			console.log(currentUser.id);
+			}		
+
       }
 
-      $().ready(function() {
-        $('form').submit(formCapture);
-      });
+      	//Making JS Do Shit
+	  	$().ready(function() {
+	       $('form').submit(formCapture); 
+	  });
+
     </script>
   
-
-
 
   </head>
 	<body>
@@ -52,7 +100,7 @@
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 					<li class="active"><a href="#">Links</a></li>
-					<li><a href="#about">Exit</a></li>
+					<li><a data-toggle="modal" data-target="#login">Login</a></li>
 					</ul>
 				</div>
 			</div>
@@ -95,7 +143,7 @@
 						</label>											
 					  </div>
 					  <br />					  
-					  <button type="submit" class="btn btn-default" name="source">Create Links Now</button>
+					  <button type="submit" class="btn btn-default" name="submitted" id="submitted">Create Links Now</button>
 					</form>		        	
 		     	</div>
 		  </div>
@@ -108,7 +156,7 @@
 	      		<div class="span12 text-center">
 		        	<h1>Links From The Past</h1>
 					<div class="table-responsive">
-					  <table class="table table-striped table-hover">
+					  <table class="table table-striped table-hover" id="table-results">
 					    <tr>
 					    	<th>Link</th>
 					    	<th>Source</th>
@@ -116,39 +164,36 @@
 					    	<th>Campaign</th>
 					    	<th>Date</th>
 					  	</tr>
-					  	<tr>
-					  		<td id="test">Cupcake</td>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  	</tr>
-					  	<tr>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  	</tr>
-					  	<tr>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  	</tr>
-					  	<tr>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  		<td>Cupcake</td>
-					  	</tr>
+					  	<span id="tablehere"></span>
 					  </table>
 					</div>		        	
 		     	</div>
 		  </div>
 	    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+					<form class="form-inline" role="form">
+					  <div class="form-group">
+					    <label class="sr-only" for="email">URL</label>
+					    <input type="email" class="form-control" id="email" name="email" placeholder="E-mail Address">
+					  </div>
+					  <div class="form-group">
+					  	<label class="sr-only" for="password">Campaign</label>
+					    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+					  </div>
+					  
+					  <button type="submit" class="btn btn-default">Go!</button>
+					</form>	      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 
 
 	    <!-- Include all compiled plugins (below), or include individual files as needed -->
