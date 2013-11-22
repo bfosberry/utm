@@ -15,6 +15,12 @@
 
     <script>
 
+    	 function logoutFunction() {
+    	 	auth.logout();
+    		console.log("woooooo");
+    	}
+
+
     	//Pulling Data From Firebase and Building Initial Table
 			var fireBaseConnect2 = new Firebase('https://utmz.firebaseIO.com/');
 			// fireBaseConnect2.on('child_added', function(snapshot) {
@@ -28,9 +34,12 @@
 		  if (error) {
 		    // an error occurred while attempting login
 		    console.log(error);
+			$("#error-login").append(error.message +"<br />");	    
 		  } else if (user) {
 		    // user authenticated with Firebase
 		    console.log('User ID: ' + user.id + ', Provider: ' + user.provider);
+			$("#loginlogout").html("<a href=\"\" onclick=\"logoutFunction()\" id=\"logout-link\">Logout</a>");	    		    
+			$('#login').modal('hide');		    
 			currentUser = user;  
 			currentUserRef = fireBaseConnect2.child('/users/' + currentUser.id);	
 			currentUserRef.on('child_added', function(snapshot) {
@@ -41,12 +50,6 @@
 		  }
 		});
 
-		auth.login('password', {
-		  email: 'ethangj@gmail.com',
-		  password: 'romona123',
-  		  rememberMe: false		  
-		});
-
 
 		//Hijacking The Form
     	var formCapture = function(event) {
@@ -54,11 +57,28 @@
 
 
 			//Building Variables And Object Out Of Form Results
+
+			var login = {
+				email: $("input[name=email]").val(),
+				password: $("input[name=password]").val()
+			};
+
+			if(login.email.length > 0) {
+				auth.login('password', {
+				  email: login.email,
+				  password: login.password,
+		  		  rememberMe: false		  
+				});}
+			else {
+				console.log("NO");
+			};
+
 	  		var entry = {
 	          campaign: $("input[name=campaign]").val(),
 	          source: $("input[name=source]:checked").val(),
 	          medium: $("select[name=medium]").val() 
-	      	};			
+	      	};	
+
 		    var srcObj = new Object();
 		    $("input:checked").each(function(i){
 	            var sourcedUrl = $("input[name=url]").val()+"?utm_medium="+
@@ -80,6 +100,9 @@
       	//Making JS Do Shit
 	  	$().ready(function() {
 	       $('form').submit(formCapture); 
+		if(currentUser.id === undefined) {
+			$("#loginlogout").append("<a data-toggle=\"modal\" data-target=\"#login\">Login</a>");	    
+		};	
 	  });
 
     </script>
@@ -100,7 +123,7 @@
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 					<li class="active"><a href="#">Links</a></li>
-					<li><a data-toggle="modal" data-target="#login">Login</a></li>
+					<li id="loginlogout"></li>
 					</ul>
 				</div>
 			</div>
@@ -176,7 +199,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-					<form class="form-inline" role="form">
+      				<p class="error" id="error-login"></p>
+					<form class="form-inline" role="form" name="login" id="login" class="login">
 					  <div class="form-group">
 					    <label class="sr-only" for="email">URL</label>
 					    <input type="email" class="form-control" id="email" name="email" placeholder="E-mail Address">
