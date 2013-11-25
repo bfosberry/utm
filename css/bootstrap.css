@@ -271,6 +271,7 @@ table {
   .navbar {
     display: none;
   }
+
   .table td,
   .table th {
     background-color: #fff !important;
@@ -4757,26 +4758,32 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse {
-  background-color: #222222;
-  border-color: #080808;
+  background-color: #7DBA49;
+  border-color: #7DBA49;
 }
 
 .navbar-inverse .navbar-brand {
-  color: #999999;
+  color: #fff;
+  font-family: 'Merriweather Sans', sans-serif;
+  font-weight: bold;
 }
 
 .navbar-inverse .navbar-brand:hover,
 .navbar-inverse .navbar-brand:focus {
   color: #ffffff;
   background-color: transparent;
+  font-family: 'Merriweather Sans', sans-serif;
+  font-weight: bold;  
 }
 
 .navbar-inverse .navbar-text {
-  color: #999999;
+  color: #fff;
 }
 
 .navbar-inverse .navbar-nav > li > a {
-  color: #999999;
+  color: #fff;
+  font-family: 'Merriweather Sans', sans-serif;
+  font-weight: bold;  
 }
 
 .navbar-inverse .navbar-nav > li > a:hover,
@@ -7067,6 +7074,9 @@ td.visible-print {
 
 table th, table td {
   text-align: center;
+  font-family: 'Merriweather', serif;
+  font-weight: lighter;  
+  font-size: .8em;
 }
 
 table th {
@@ -7079,4 +7089,19 @@ table th {
 
 .bodyy form {
   margin-top: 20px;
+}
+
+h1, h2{
+   font-family: 'Merriweather Sans', sans-serif;
+   font-weight: bold; 
+   color: #7dba49;
+}
+
+label.checkbox-inline {
+  font-family: 'Merriweather Sans', sans-serif;
+}
+
+#submitted {
+  margin-top: 15px;
+  font-family: 'Merriweather Sans', sans-serif;
 }

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>UTMs In Your Face</title>
-
+	<link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic|Merriweather+Sans:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>   
 	<script src='https://cdn.firebase.com/v0/firebase.js'></script>
  	<script type='text/javascript' src='https://cdn.firebase.com/v0/firebase-simple-login.js'></script>   
@@ -15,64 +15,72 @@
 
     <script>
 
+    	var linksExist = 0;
+
+    	//Log A User Out
     	 function logoutFunction() {
     	 	auth.logout();
-    		console.log("woooooo");
+    		console.log("Logging out.");
     	}
 
+    	//Create A New User
+	      var makeUser = function(e) {
+	        e.preventDefault();
+	        var email = $("#email").val();
+	        var password = $("#password").val();
+	        auth.createUser(email, password, function(error, user) {
+	          if (!error) {
+	            console.log('Created! - User Id: ' + user.id + ', Email: ' + user.email);
+	          } else {
+	            console.log(error);
+	          }
+	        });
+	      };
 
-    	//Pulling Data From Firebase and Building Initial Table
-			var fireBaseConnect2 = new Firebase('https://utmz.firebaseIO.com/');
-			// fireBaseConnect2.on('child_added', function(snapshot) {
-			// 	$("#table-results").append("<tr><td>"+snapshot.val().url+"</td><td>"+snapshot.val().source+"</td><td>"+snapshot.val().medium+"</td><td>"+snapshot.val().campaign+"</td><td>"+Date()+"</td></tr>");			  
-			// });
+    	//Firebase Connection
+		var fireBaseConnect2 = new Firebase('https://utmz.firebaseIO.com/');
 
-		//Firebase SimpleLogin Default Script	
+		//Logging In To Firebase
+		//Setting a global currentUser variable to check user status
 		var currentUser = {};
 		var utmAuth = new Firebase('https://utmz.firebaseio.com');
 		var auth = new FirebaseSimpleLogin(utmAuth, function(error, user) {
 		  if (error) {
-		    // an error occurred while attempting login
+		    //Report log in errors to the console
+		    //Log error to user form
 		    console.log(error);
 			$("#error-login").append(error.message +"<br />");	    
-		  } else if (user) {
-		    // user authenticated with Firebase
-		    console.log('User ID: ' + user.id + ', Provider: ' + user.provider);
+		  } 
+
+		  else if (user) {
+		    //User successfully logged in
+			//Building table of user's links if user successfully logs in
+			//Switch top link to "Log Out" if user successfully logs in	
+			//Close The Modal If Login Successful
+			$('#login').modal('hide');			
+		    console.log('Logged In As User ID: ' + user.id + ', Provider: ' + user.provider);
 			$("#loginlogout").html("<a href=\"\" onclick=\"logoutFunction()\" id=\"logout-link\">Logout</a>");	    		    
-			$('#login').modal('hide');		    
 			currentUser = user;  
 			currentUserRef = fireBaseConnect2.child('/users/' + currentUser.id);	
 			currentUserRef.on('child_added', function(snapshot) {
-				$("#table-results").append("<tr><td>"+snapshot.val().url+"</td><td>"+snapshot.val().source+"</td><td>"+snapshot.val().medium+"</td><td>"+snapshot.val().campaign+"</td><td>"+Date()+"</td></tr>");			  
-			});			 
+				$("#table-results").append("<tr><td><a href=\""+snapshot.val().url+"\">"+snapshot.val().url+"</a></td><td>"+snapshot.val().source+"</td><td>"+snapshot.val().medium+"</td><td>"+snapshot.val().campaign+"</td><td>"+Date()+"</td></tr>");			  
+			});
+			if(linksExist === 1) {
+				// var fireBaseConnect = new Firebase('https://utmz.firebaseIO.com/users/'+currentUser.id);
+				// 	fireBaseConnect.child(snapshot.val().campaign + " + " + snapshot.val().source).set({url: snapshot.val().url, source: snapshot.val().source, campaign: snapshot.val().campaign, medium: snapshot.val().medium});
+			}
+
 		  } else {
 		    // user is logged out
 		  }
 		});
 
 
-		//Hijacking The Form
+		//Function For Building, Saving And Logging New Links
     	var formCapture = function(event) {
 	        event.preventDefault();
 
-
 			//Building Variables And Object Out Of Form Results
-
-			var login = {
-				email: $("input[name=email]").val(),
-				password: $("input[name=password]").val()
-			};
-
-			if(login.email.length > 0) {
-				auth.login('password', {
-				  email: login.email,
-				  password: login.password,
-		  		  rememberMe: false		  
-				});}
-			else {
-				console.log("NO");
-			};
-
 	  		var entry = {
 	          campaign: $("input[name=campaign]").val(),
 	          source: $("input[name=source]:checked").val(),
@@ -88,20 +96,57 @@
 		        srcObj[$(this).val()] = sourcedUrl;        
 	        });        
 
-		    //Connecting To Firebase And Setting Each Link As A Record In A Links Object
+		    //Iterating Through Each Link Generated
 			for(var k in srcObj){
+				//If A User Is Logged In, Save Links To Firebase And Build Table
+				if(currentUser.id > 0) {
 			var fireBaseConnect = new Firebase('https://utmz.firebaseIO.com/users/'+currentUser.id);
 				fireBaseConnect.child(entry.campaign + " + " + k).set({url: srcObj[k], source: k, campaign: entry.campaign, medium: entry.medium});
-			console.log(currentUser.id);
-			}		
+			}
+				//If A User Is Not Logged In, Build Table But Do Not Save Links
+				else {
+				$("#table-results").append("<tr><td><a href=\""+srcObj[k]+"\">"+srcObj[k]+"</a></td><td>"+k+"</td><td>"+entry.medium+"</td><td>"+entry.campaign+"</td><td>"+Date()+"</td></tr>");			  
+				}
+				
+				linksExist = 1;
+			 }
 
       }
 
+		//Function For Logging In
+		//Captures Inputs From The User Form
+    	var formLogin = function(event) {
+	        event.preventDefault();
+			var login = {
+				email: $("input[name=email]").val(),
+				password: $("input[name=password]").val()
+			};
+
+			//If Email Field On User Form Has Data, Try To Log In With Firebase
+			if(login.email.length > 0) {
+				auth.login('password', {
+				  email: login.email,
+				  password: login.password,
+		  		  rememberMe: false		  
+				});
+			}
+
+			else {
+				//Firebase Failed To Authenticate User
+				console.log("Login Failed");
+			};
+	    }
+
       	//Making JS Do Shit
+      	//Set Top Bar To Say "Login" If User Not Logged In
+      	//Run Functions On Button Clicks
 	  	$().ready(function() {
-	       $('form').submit(formCapture); 
+	       $('#submitted').click(formCapture); 
+	       $('#loginForm').click(formLogin); 
+	       $('#newUser').click(makeUser); 	       
 		if(currentUser.id === undefined) {
-			$("#loginlogout").append("<a data-toggle=\"modal\" data-target=\"#login\">Login</a>");	    
+			$("#loginlogout").append("<a data-toggle=\"modal\" data-target=\"#login\">Login</a>");
+			console.log("Not logged in.");	    
 		};	
 	  });
 
@@ -122,7 +167,6 @@
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Links</a></li>
 					<li id="loginlogout"></li>
 					</ul>
 				</div>
@@ -150,7 +194,7 @@
 						  <option name="medium">E-Mail</option>
 						</select>
 					  </div>
-					  <br />
+					  <br /><br />
 					  <div class="form-group">
 						<label class="checkbox-inline">
 						  <input type="checkbox" id="FBCheck" value="FB" name="source"> FB
@@ -179,16 +223,18 @@
 	      		<div class="span12 text-center">
 		        	<h1>Links From The Past</h1>
 					<div class="table-responsive">
-					  <table class="table table-striped table-hover" id="table-results">
-					    <tr>
-					    	<th>Link</th>
-					    	<th>Source</th>
-					    	<th>Medium</th>
-					    	<th>Campaign</th>
-					    	<th>Date</th>
-					  	</tr>
-					  	<span id="tablehere"></span>
-					  </table>
+						<div id="starthere">
+						  <table class="table table-striped table-hover" id="table-results">
+						    <tr>
+						    	<th>Link</th>
+						    	<th>Source</th>
+						    	<th>Medium</th>
+						    	<th>Campaign</th>
+						    	<th>Date</th>
+						  	</tr>
+						  	<span id="tablehere"></span>
+						  </table>
+					  	</div>
 					</div>		        	
 		     	</div>
 		  </div>
@@ -210,7 +256,9 @@
 					    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
 					  </div>
 					  
-					  <button type="submit" class="btn btn-default">Go!</button>
+					  <button type="submit" class="btn btn-default" class="loginForm" name="loginForm" id="loginForm">Enter</button>
+					  <button class="btn btn-default" class="newUser" name="newUser" id="newUser">Create Yourself</button>
+
 					</form>	      </div>
 
     </div><!-- /.modal-content -->
@@ -219,6 +267,21 @@
 
 
 
+		<script>
+			var Keen=Keen ||{configure:function(e){this._cf=e},addEvent:function(e,t,n,i){this._eq=this._eq||[],this._eq.push([e,t,n,i])},setGlobalProperties:function(e){this._gp=e},onChartsReady:function(e){this._ocrq=this._ocrq||[],this._ocrq.push(e)}};(function(){var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src=("https:"==document.location.protocol?"https://":"http://")+"dc8na2hxrj29i.cloudfront.net/code/keen-2.1.0-min.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();
+
+			Keen.configure({ 
+			  projectId: "5293804105cd6633ea000008", 
+			  writeKey: "cac1a58dffc43e86f088545dd9933b96b81e71bab2daa16e6bfd883f29b94d94d35935f8c8e7142afa3eecfbf11171331e10472eac9d0e6510ce81f14d4c891a87b14fd1cb2b2b21e8f2612b7bc3ec08c0af661127b5d2aa22d016200ede7dfa1e6da8e62800a9323e001020162c36f5" 
+			});
+
+			Keen.addEvent('pageView', {
+			  page: window.location.href,
+			  time: new Date().toISOString(),
+			  referrer: document.referrer,
+			  agent: window.navigator.userAgent
+			});		
+		</script>
 
 	    <!-- Include all compiled plugins (below), or include individual files as needed -->
 	    <script src="js/bootstrap.min.js"></script>
