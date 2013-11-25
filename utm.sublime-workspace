@@ -1,0 +1,271 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"m",
+				"margin-top"
+			],
+			[
+				"p",
+				"padding-left"
+			],
+			[
+				"b",
+				"border-image"
+			],
+			[
+				"text-",
+				"text-indent"
+			],
+			[
+				"borde",
+				"border-top"
+			],
+			[
+				"c",
+				"color"
+			],
+			[
+				"MA",
+				"margin-bottom"
+			],
+			[
+				"ma",
+				"margin-bottom"
+			],
+			[
+				"margi",
+				"margin-top"
+			],
+			[
+				"bac",
+				"background-color"
+			],
+			[
+				"w",
+				"width"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"mat",
+				"margin-bottom"
+			],
+			[
+				"s",
+				"box-shadow"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 360.0,
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/users/edit.html.erb",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/users/profiles.html.erb",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/users/_form.html.erb",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/users/home.html.erb",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/users/confirm.html.erb",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/reports/show.html.erb",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/reports/index.html.erb",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/models/report.rb",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/models/report_template.rb",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/assets/stylesheets/application.css.scss",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/utm/utm.sublime-project",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/utm/index.html",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/utm/css/bootstrap.css",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/reports/new.html.erb",
+		"/Users/Ethan/Desktop/landing/index.html",
+		"/Users/Ethan/Desktop/landing/css/woody-landing.css",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/layouts/_header.html.erb",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/assets/stylesheets/scaffolds.css.scss",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/users/index.html.erb",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/report_templates/index.html.erb",
+		"/Users/Ethan/Desktop/landing/css/bootstrap.css",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/utm/user.html",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/utm/users.html",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/utm/index.hmtl,",
+		"/Users/Ethan/test.text",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/utm/user.hml",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/layouts/application.html.erb",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/reports/_user_engagement.html.erb",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/reports/_content_clarity.html.erb",
+		"/Users/Ethan/Dropbox/Work/Side Projects/Code/campaign_therapist/app/views/reports/_business_goals.html.erb",
+		"/Users/Ethan/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/Ethan/Downloads/Temp. Save/Work/Eloquent JavaScript/chapter3.html"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"p",
+			"p {",
+			"h1",
+			"undeclared",
+			"time",
+			"hover",
+			"nav",
+			"    font-family: 'Merriweather Sans', sans-serif;\n",
+			"h1",
+			"h1 {",
+			"45525D",
+			"webkit",
+			"merriw",
+			"actiuonable",
+			"p",
+			"h2",
+			"saveForm",
+			"saveform",
+			"savefomr",
+			"h2",
+			".myButton",
+			"6px 6px 8px 17px",
+			".glossy .image-wrap {\n	-webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,.5);\n	-moz-box-shadow: inset 0 -1px 0 rgba(0,0,0,.5);\n	box-shadow: inset 0 -1px 0 rgba(0,0,0,.5);\n\n	-webkit-border-radius: 20px;\n	-moz-border-radius: 20px;\n	border-radius: 20px;\n}\n\n.glossy .image-wrap:after {\n	position: absolute;\n	content: ' ';\n	width: 100%;\n	height: 50%;\n	top: 0;\n	left: 0;\n\n	-webkit-border-radius: 20px;\n	-moz-border-radius: 20px;\n	border-radius: 20px;\n\n	background: -moz-linear-gradient(top, rgba(255,255,255,0.7) 0%, rgba(255,255,255,.1) 100%);\n	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.7)), color-stop(100%,rgba(255,255,255,.1)));\n.glossy .image-wrap",
+			"small",
+			"p",
+			"h1",
+			"h2",
+			"submitted",
+			"myRootRef",
+			"butt",
+			"titties",
+			"test1",
+			"medium",
+			"message",
+			"url",
+			"login_form",
+			"light",
+			"margin-bottom",
+			"\nh1 {\n	margin-bottom: 40px;\n	font-family: 'Oswald', sans-serif;\n	letter-spacing: 2px;\n	word-spacing: .1em;\n	font-weight: bold;\n	text-align: center;\n}\n\n.row p, .row tr td, .row label {\n	font-family: 'Merriweather-sans', serif;\n	font-weight: light;\n}\n\ninput[type=\"submit\"]  {\n    -moz-box-shadow:inset 0px 0px 14px -3px #f2fadc;\n    -webkit-box-shadow:inset 0px 0px 14px -3px #f2fadc;\n    box-shadow:inset 0px 0px 14px -3px #f2fadc;\n    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dbe6c4), color-stop(1, #9ba892));\n    background:-moz-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);\n    background:-webkit-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);\n    background:-o-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);\n    background:-ms-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);\n    background:linear-gradient(to bottom, #dbe6c4 5%, #9ba892 100%);\n    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dbe6c4', endColorstr='#9ba892',GradientType=0);\n    background-color:#dbe6c4;\n    -moz-border-radius:6px;\n    -webkit-border-radius:6px;\n    border-radius:6px;\n    border:1px solid #b2b8ad;\n    display:inline-block;\n    color:#757d6f;\n    font-family:arial;\n    font-size:15px;\n    font-weight:bold;\n    padding:6px 24px;\n    text-decoration:none;\n    text-shadow:0px 1px 0px #ced9bf;\n    }\n\ninput[type=\"submit\"]:hover  {\n    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #9ba892), color-stop(1, #dbe6c4));\n    background:-moz-linear-gradient(top, #9ba892 5%, #dbe6c4 100%);\n    background:-webkit-linear-gradient(top, #9ba892 5%, #dbe6c4 100%);\n    background:-o-linear-gradient(top, #9ba892 5%, #dbe6c4 100%);\n    bakground:-ms-linear-gradient(top, #9ba892 5%, #dbe6c4 100%);\n    background:linear-gradient(to bottom, #9ba892 5%, #dbe6c4 100%);\n    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#9ba892', endColorstr='#dbe6c4',GradientType=0);\n    background-color:#9ba892;\n}\n\ninput[type=\"submit\"]:active  {\n    position:relative;\n    top:1px;\n}\n\ntable.table td, table.table th {\n text-align: center;\n}\n\n\na.new-thing {\n margin-bottom: 25px;\n text-transform: capitalize;\n}\n\ntable, h1 {\n text-transform: capitalize;\n}\n\na {\n text-decoration: underline;\n}\n\n.table-bordered {\n border-radius: 15px;\n}",
+			"\n.nav {\n	padding-top: 15px;\n	font-size: 1.2em;\n	font-family: 'Merriweather', serif;\n	letter-spacing: -1px;	\n}\n\n.break {\n	margin-bottom: 110px;\n}\n\nh1 {\n	margin-bottom: 40px;\n	font-family: 'Oswald', sans-serif;\n	letter-spacing: 2px;\n	word-spacing: .1em;\n	font-weight: bold;\n	text-align: center;\n}\n\n.row p, .row tr td, .row label {\n	font-family: 'Merriweather-sans', serif;\n	font-weight: light;\n}\n\ninput[type=\"submit\"]  {\n    -moz-box-shadow:inset 0px 0px 14px -3px #f2fadc;\n    -webkit-box-shadow:inset 0px 0px 14px -3px #f2fadc;\n    box-shadow:inset 0px 0px 14px -3px #f2fadc;\n    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dbe6c4), color-stop(1, #9ba892));\n    background:-moz-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);\n    background:-webkit-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);\n    background:-o-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);\n    background:-ms-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);\n    background:linear-gradient(to bottom, #dbe6c4 5%, #9ba892 100%);\n    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dbe6c4', endColorstr='#9ba892',GradientType=0);\n    background-color:#dbe6c4;\n    -moz-border-radius:6px;\n    -webkit-border-radius:6px;\n    border-radius:6px;\n    border:1px solid #b2b8ad;\n    display:inline-block;\n    color:#757d6f;\n    font-family:arial;\n    font-size:15px;\n    font-weight:bold;\n    padding:6px 24px;\n    text-decoration:none;\n    text-shadow:0px 1px 0px #ced9bf;\n    }\n\ninput[type=\"submit\"]:hover  {\n    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #9ba892), color-stop(1, #dbe6c4));\n    background:-moz-linear-gradient(top, #9ba892 5%, #dbe6c4 100%);\n    background:-webkit-linear-gradient(top, #9ba892 5%, #dbe6c4 100%);\n    background:-o-linear-gradient(top, #9ba892 5%, #dbe6c4 100%);\n    bakground:-ms-linear-gradient(top, #9ba892 5%, #dbe6c4 100%);\n    background:linear-gradient(to bottom, #9ba892 5%, #dbe6c4 100%);\n    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#9ba892', endColorstr='#dbe6c4',GradientType=0);\n    background-color:#9ba892;\n}\n\ninput[type=\"submit\"]:active  {\n    position:relative;\n    top:1px;\n}\n\ntable.table td, table.table th {\n text-align: center;\n}\n\n\na.new-thing {\n margin-bottom: 25px;\n text-transform: capitalize;\n}\n\ntable, h1 {\n text-transform: capitalize;\n}\n\na {\n text-decoration: underline;\n}\n\n.table-bordered {\n border-radius: 15px;\n}",
+			"font",
+			".row p, .row tr td, .row label {\n",
+			"row"
+		],
+		"highlight": true,
+		"in_selection": true,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"#saveForm",
+			"3px 3px 4px 7px",
+			"img",
+			"fireBaseConnect"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}
