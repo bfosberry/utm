@@ -15,7 +15,15 @@
 
     <script>
 
+		var buildTable = function(linksVar) {
+			$("#table-results").append("<tr><td><a href=\""+linksVar.url+"\">"+linksVar.url+"</a></td><td>"+linksVar.source+"</td><td>"+linksVar.medium+"</td><td>"+linksVar.campaign+"</td><td>"+linksVar.date+"</td></tr>");			  
+    	}
+
+    	var createLinks = function(formData) {	
+    	}
+
     	var linksExist = 0;
+    	var tempLinks = {};
 
     	//Log A User Out
     	 function logoutFunction() {
@@ -30,7 +38,13 @@
 	        var password = $("#password").val();
 	        auth.createUser(email, password, function(error, user) {
 	          if (!error) {
-	            console.log('Created! - User Id: ' + user.id + ', Email: ' + user.email);
+				$('#login').modal('hide');	
+				auth.login('password', {
+				  email: email,
+				  password: password,
+		  		  rememberMe: false		  
+				});						
+	         
 	          } else {
 	            console.log(error);
 	          }
@@ -58,21 +72,19 @@
 			//Switch top link to "Log Out" if user successfully logs in	
 			//Close The Modal If Login Successful
 			$('#login').modal('hide');			
-		    console.log('Logged In As User ID: ' + user.id + ', Provider: ' + user.provider);
 			$("#loginlogout").html("<a href=\"\" onclick=\"logoutFunction()\" id=\"logout-link\">Logout</a>");	    		    
 			currentUser = user;  
-			currentUserRef = fireBaseConnect2.child('/users/' + currentUser.id);	
-			currentUserRef.on('child_added', function(snapshot) {
-				$("#table-results").append("<tr><td><a href=\""+snapshot.val().url+"\">"+snapshot.val().url+"</a></td><td>"+snapshot.val().source+"</td><td>"+snapshot.val().medium+"</td><td>"+snapshot.val().campaign+"</td><td>"+Date()+"</td></tr>");			  
-			});
+			currentUserRef = fireBaseConnect2.child('/users/' + currentUser.id);
+			//Push pre-existing links to Firebase after logging ing	
 			if(linksExist === 1) {
-				// var fireBaseConnect = new Firebase('https://utmz.firebaseIO.com/users/'+currentUser.id);
-				// 	fireBaseConnect.child(snapshot.val().campaign + " + " + snapshot.val().source).set({url: snapshot.val().url, source: snapshot.val().source, campaign: snapshot.val().campaign, medium: snapshot.val().medium});
+				console.log("You got links.");
 			}
+			//Pull down user's links and build table			
+			currentUserRef.on('child_added', function(snapshot) {
+				buildTable(snapshot.val());
+			});
 
-		  } else {
-		    // user is logged out
-		  }
+		  } 
 		});
 
 
@@ -84,7 +96,8 @@
 	  		var entry = {
 	          campaign: $("input[name=campaign]").val(),
 	          source: $("input[name=source]:checked").val(),
-	          medium: $("select[name=medium]").val() 
+	          medium: $("select[name=medium]").val(),
+	          date: Date()
 	      	};	
 
 		    var srcObj = new Object();
@@ -98,18 +111,19 @@
 
 		    //Iterating Through Each Link Generated
 			for(var k in srcObj){
+				entry.url = srcObj[k];
+				entry.source = k;
 				//If A User Is Logged In, Save Links To Firebase And Build Table
 				if(currentUser.id > 0) {
 			var fireBaseConnect = new Firebase('https://utmz.firebaseIO.com/users/'+currentUser.id);
-				fireBaseConnect.child(entry.campaign + " + " + k).set({url: srcObj[k], source: k, campaign: entry.campaign, medium: entry.medium});
+				fireBaseConnect.child(entry.campaign + " + " + k).set({url: entry.url, source: entry.source, campaign: entry.campaign, medium: entry.medium, date: Date()});
 			}
 				//If A User Is Not Logged In, Build Table But Do Not Save Links
 				else {
-				$("#table-results").append("<tr><td><a href=\""+srcObj[k]+"\">"+srcObj[k]+"</a></td><td>"+k+"</td><td>"+entry.medium+"</td><td>"+entry.campaign+"</td><td>"+Date()+"</td></tr>");			  
+					buildTable(entry);
+					linksExist = 1;
 				}
-				
-				linksExist = 1;
-			 }
+			}
 
       }
 
