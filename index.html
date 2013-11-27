@@ -14,16 +14,11 @@
     <link href="css/bootstrap.css" rel="stylesheet">
 
     <script>
+    	var entries = [];
 
 		var buildTable = function(linksVar) {
 			$("#table-results").append("<tr><td><a href=\""+linksVar.url+"\">"+linksVar.url+"</a></td><td>"+linksVar.source+"</td><td>"+linksVar.medium+"</td><td>"+linksVar.campaign+"</td><td>"+linksVar.date+"</td></tr>");			  
     	}
-
-    	var createLinks = function(formData) { 	
-    	}
-
-    	var linksExist = 0;
-    	var tempLinks = {};
 
     	//Log A User Out
     	 function logoutFunction() {
@@ -76,9 +71,8 @@
 			currentUser = user;  
 			currentUserRef = fireBaseConnect2.child('/users/' + currentUser.id);
 			//Push pre-existing links to Firebase after logging ing	
-			if(linksExist === 1) {
-				console.log("You got links.");
-			}
+			entries.forEach( pushData );
+
 			//Pull down user's links and build table			
 			currentUserRef.on('child_added', function(snapshot) {
 				buildTable(snapshot.val());
@@ -95,7 +89,7 @@
 	        // FORMATTING DATA 
 
 	        // for each utm_source checked, create a link entry
-		    var entries = [];
+		    
 		    $("input:checked").each(function(i){
 				//Building Variables And Object Out Of Form Results
 				var entry = {
@@ -120,17 +114,19 @@
 			entries.forEach( function(entry){
 				//If A User Is Logged In, Save Links To Firebase And Build Table
 				if(currentUser.id > 0) {
-					var fireBaseConnect = new Firebase('https://utmz.firebaseIO.com/users/'+currentUser.id);
-					fireBaseConnect.child(entry.campaign + " + " + entry.source).set({url: entry.url, source: entry.source, campaign: entry.campaign, medium: entry.medium, date: Date()});
+					pushData(entry);
 				}
-					//If A User Is Not Logged In, Build Table But Do Not Save Links
+				//If A User Is Not Logged In, Build Table But Do Not Save Links
 				else {
 					buildTable(entry);
-					linksExist = 1;
 				}
 			});
+		}
 
-      }
+		var pushData = function(entry) {
+			var fireBaseConnect = new Firebase('https://utmz.firebaseIO.com/users/'+currentUser.id);
+			fireBaseConnect.child(entry.campaign + " + " + entry.source).set({url: entry.url, source: entry.source, campaign: entry.campaign, medium: entry.medium, date: entry.date});
+		}
 
 		//Function For Logging In
 		//Captures Inputs From The User Form
