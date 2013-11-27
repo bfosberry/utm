@@ -92,38 +92,43 @@
     	var formCapture = function(event) {
 	        event.preventDefault();
 
-			//Building Variables And Object Out Of Form Results
-	  		var entry = {
-	          campaign: $("input[name=campaign]").val(),
-	          source: $("input[name=source]:checked").val(),
-	          medium: $("select[name=medium]").val(),
-	          date: Date()
-	      	};	
+	        // FORMATTING DATA 
 
-		    var srcObj = new Object();
+	        // for each utm_source checked, create a link entry
+		    var entries = [];
 		    $("input:checked").each(function(i){
-	            var sourcedUrl = $("input[name=url]").val()+"?utm_medium="+
+				//Building Variables And Object Out Of Form Results
+				var entry = {
+					campaign: $("input[name=campaign]").val(),
+					source: $("input[name=source]:checked").val(),
+					medium: $("select[name=medium]").val(),
+					date: Date()
+				};
+
+	            entry.url = $("input[name=url]").val()+"?utm_medium="+
 	          		$("select[name=medium]").val()+"&utm_source="+
 	          		$(this).val()+"&utm_campaign="+
 	          		$("input[name=campaign]").val(); 
-		        srcObj[$(this).val()] = sourcedUrl;        
-	        });        
+		        entry.source = $(this).val();
+		        
+		        entries.push(entry);
+	        });
+
+		    // PRESENTATION AND PERSISTENCE
 
 		    //Iterating Through Each Link Generated
-			for(var k in srcObj){
-				entry.url = srcObj[k];
-				entry.source = k;
+			entries.forEach( function(entry){
 				//If A User Is Logged In, Save Links To Firebase And Build Table
 				if(currentUser.id > 0) {
-			var fireBaseConnect = new Firebase('https://utmz.firebaseIO.com/users/'+currentUser.id);
-				fireBaseConnect.child(entry.campaign + " + " + k).set({url: entry.url, source: entry.source, campaign: entry.campaign, medium: entry.medium, date: Date()});
-			}
-				//If A User Is Not Logged In, Build Table But Do Not Save Links
+					var fireBaseConnect = new Firebase('https://utmz.firebaseIO.com/users/'+currentUser.id);
+					fireBaseConnect.child(entry.campaign + " + " + entry.source).set({url: entry.url, source: entry.source, campaign: entry.campaign, medium: entry.medium, date: Date()});
+				}
+					//If A User Is Not Logged In, Build Table But Do Not Save Links
 				else {
 					buildTable(entry);
 					linksExist = 1;
 				}
-			}
+			});
 
       }
 
