@@ -72,6 +72,7 @@
 			currentUserRef = fireBaseConnect2.child('/users/' + currentUser.id);
 			//Push pre-existing links to Firebase after logging ing	
 			entries.forEach( pushData );
+			entries = [];
 
 			//Pull down user's links and build table			
 			currentUserRef.on('child_added', function(snapshot) {
@@ -87,6 +88,7 @@
 	        event.preventDefault();
 
 	        // FORMATTING DATA 
+	        var newEntries = [];
 
 	        // for each utm_source checked, create a link entry
 		    
@@ -105,19 +107,20 @@
 	          		$("input[name=campaign]").val(); 
 		        entry.source = $(this).val();
 		        
-		        entries.push(entry);
+		        newEntries.push(entry);
 	        });
 
 		    // PRESENTATION AND PERSISTENCE
 
 		    //Iterating Through Each Link Generated
-			entries.forEach( function(entry){
+			newEntries.forEach( function(entry){
 				//If A User Is Logged In, Save Links To Firebase And Build Table
 				if(currentUser.id > 0) {
 					pushData(entry);
 				}
 				//If A User Is Not Logged In, Build Table But Do Not Save Links
 				else {
+					entries.push(entry);
 					buildTable(entry);
 				}
 			});
