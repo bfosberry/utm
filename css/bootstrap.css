@@ -4758,8 +4758,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse {
-  background-color: #7DBA49;
-  border-color: #7DBA49;
+  background-color: #45525d;
+  border-color: #45525d;
 }
 
 .navbar-inverse .navbar-brand {
@@ -7094,7 +7094,13 @@ table th {
 h1, h2{
    font-family: 'Merriweather Sans', sans-serif;
    font-weight: bold; 
-   color: #7dba49;
+   color: #45525d;
+}
+
+h3 {
+  font-size: 1.3em;
+  color: #616161;
+  font-style: italic;
 }
 
 label.checkbox-inline {
@@ -7104,4 +7110,8 @@ label.checkbox-inline {
 #submitted {
   margin-top: 15px;
   font-family: 'Merriweather Sans', sans-serif;
+}
+
+#newUser {
+  float: right;
 }

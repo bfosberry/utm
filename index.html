@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+
+	 <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-26231273-2', 'findclearpath.com');
+	  ga('send', 'pageview');
+
+	</script>
+
+
+	<script type="text/javascript">
+	   var _mfq = _mfq || [];
+	   (function() {
+	       var mf = document.createElement("script"); mf.type = "text/javascript"; mf.async = true;
+	       mf.src = "//cdn.mouseflow.com/projects/ef1fc017-ddd0-40df-b89e-de60152fd36e.js";
+	       document.getElementsByTagName("head")[0].appendChild(mf);
+	   })();
+	</script>
+ 	
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,8 +89,9 @@
 			//Switch top link to "Log Out" if user successfully logs in	
 			//Close The Modal If Login Successful
 			$('#login').modal('hide');			
-			$("#loginlogout").html("<a href=\"\" onclick=\"logoutFunction()\" id=\"logout-link\">Logout</a>");	    		    
-			currentUser = user;  
+			$("#loginlogout").html("<a href=\"\" onclick=\"logoutFunction()\" id=\"logout-link\">Logout</a>");	
+			$("#table-results").html("<tr><th>Link</th><th>Source</th><th>Medium</th><th>Campaign</th><th>Date</th></tr>");    
+			currentUser = user; 
 			currentUserRef = fireBaseConnect2.child('/users/' + currentUser.id);
 			//Push pre-existing links to Firebase after logging ing	
 			entries.forEach( pushData );
@@ -86,7 +109,8 @@
 		//Function For Building, Saving And Logging New Links
     	var formCapture = function(event) {
 	        event.preventDefault();
-
+	        $(".instructions").hide();
+			$("#table-results").html("<tr><th>Link</th><th>Source</th><th>Medium</th><th>Campaign</th><th>Date</th></tr>");
 	        // FORMATTING DATA 
 	        var newEntries = [];
 
@@ -94,11 +118,13 @@
 		    
 		    $("input:checked").each(function(i){
 				//Building Variables And Object Out Of Form Results
+				var date = new Date();
+				date = date.getMonth() + "-" + date.getDate() + "-" + date.getFullYear();
 				var entry = {
 					campaign: $("input[name=campaign]").val(),
 					source: $("input[name=source]:checked").val(),
 					medium: $("select[name=medium]").val(),
-					date: Date()
+					date: date
 				};
 
 	            entry.url = $("input[name=url]").val()+"?utm_medium="+
@@ -163,7 +189,7 @@
 	       $('#loginForm').click(formLogin); 
 	       $('#newUser').click(makeUser); 	       
 		if(currentUser.id === undefined) {
-			$("#loginlogout").append("<a data-toggle=\"modal\" data-target=\"#login\">Login</a>");
+			$("#loginlogout").append("<a data-toggle=\"modal\" data-target=\"#login\">Login To Save Links</a>");
 			console.log("Not logged in.");	    
 		};	
 	  });
@@ -195,6 +221,7 @@
 	     	<div class="row">
 	      		<div class="span12 text-center">
 		        	<h1>Make Links Here</h1>
+		        	<h3>Create custom links to track important traffic segments in Google Analytics.</h3>
 					<form class="form-inline" role="form" name="linkss" id="linkss">
 					  <div class="form-group">
 					    <label class="sr-only" for="url">URL</label>
@@ -243,14 +270,7 @@
 					<div class="table-responsive">
 						<div id="starthere">
 						  <table class="table table-striped table-hover" id="table-results">
-						    <tr>
-						    	<th>Link</th>
-						    	<th>Source</th>
-						    	<th>Medium</th>
-						    	<th>Campaign</th>
-						    	<th>Date</th>
-						  	</tr>
-						  	<span id="tablehere"></span>
+						  	<h3 class="instructions">Enter in your URL, medium and source above to build your UTMs.</h3>
 						  </table>
 					  	</div>
 					</div>		        	
