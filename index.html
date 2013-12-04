@@ -38,6 +38,14 @@
     <script>
     	var entries = [];
 
+    	// Hide and change interface stuff when user logs in
+    	var userLoggedIn = function() {
+			$('#login').modal('hide');			
+			$("#loginlogout").html("<a href=\"\" onclick=\"logoutFunction()\" id=\"logout-link\">Logout</a>");	
+			$("#table-results").html("<tr><th>Link</th><th>Source</th><th>Medium</th><th>Campaign</th><th>Date</th></tr>");    	
+    	}
+
+    	// Building table of links
 		var buildTable = function(linksVar) {
 			$("#table-results").append("<tr><td><a href=\""+linksVar.url+"\">"+linksVar.url+"</a></td><td>"+linksVar.source+"</td><td>"+linksVar.medium+"</td><td>"+linksVar.campaign+"</td><td>"+linksVar.date+"</td></tr>");			  
     	}
@@ -88,11 +96,10 @@
 			//Building table of user's links if user successfully logs in
 			//Switch top link to "Log Out" if user successfully logs in	
 			//Close The Modal If Login Successful
-			$('#login').modal('hide');			
-			$("#loginlogout").html("<a href=\"\" onclick=\"logoutFunction()\" id=\"logout-link\">Logout</a>");	
-			$("#table-results").html("<tr><th>Link</th><th>Source</th><th>Medium</th><th>Campaign</th><th>Date</th></tr>");    
+			userLoggedIn();   
 			currentUser = user; 
 			currentUserRef = fireBaseConnect2.child('/users/' + currentUser.id);
+
 			//Push pre-existing links to Firebase after logging ing	
 			entries.forEach( pushData );
 			entries = [];
@@ -111,11 +118,9 @@
 	        event.preventDefault();
 	        $(".instructions").hide();
 			$("#table-results").html("<tr><th>Link</th><th>Source</th><th>Medium</th><th>Campaign</th><th>Date</th></tr>");
-	        // FORMATTING DATA 
-	        var newEntries = [];
 
-	        // for each utm_source checked, create a link entry
-		    
+	        // Formatting data. For each utm_source checked, create a link entry
+	        var newEntries = [];
 		    $("input:checked").each(function(i){
 				//Building Variables And Object Out Of Form Results
 				var date = new Date();
@@ -136,8 +141,6 @@
 		        newEntries.push(entry);
 	        });
 
-		    // PRESENTATION AND PERSISTENCE
-
 		    //Iterating Through Each Link Generated
 			newEntries.forEach( function(entry){
 				//If A User Is Logged In, Save Links To Firebase And Build Table
@@ -152,6 +155,7 @@
 			});
 		}
 
+		// Pushing data up to Firebase.
 		var pushData = function(entry) {
 			var fireBaseConnect = new Firebase('https://utmz.firebaseIO.com/users/'+currentUser.id);
 			fireBaseConnect.child(entry.campaign + " + " + entry.source).set({url: entry.url, source: entry.source, campaign: entry.campaign, medium: entry.medium, date: entry.date});
