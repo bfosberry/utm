@@ -116,8 +116,11 @@
 		//Function For Building, Saving And Logging New Links
     	var formCapture = function(event) {
 	        event.preventDefault();
-	        $(".instructions").hide();
-			$("#table-results").html("<tr><th>Link</th><th>Source</th><th>Medium</th><th>Campaign</th><th>Date</th></tr>");
+
+	        if($(".instructions").is(":visible")) {
+		        $(".instructions").hide();
+				$("#table-results").html("<tr><th>Link</th><th>Source</th><th>Medium</th><th>Campaign</th><th>Date</th></tr>"); 
+			}
 
 	        // Formatting data. For each utm_source checked, create a link entry
 	        var newEntries = [];
